@@ -1,174 +1,26 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#100b20">
-<title>MasterIA - Seu parceiro inteligente</title>
-<style>
-*{box-sizing:border-box}
-body{margin:0;background:#100b20;color:#fff;font-family:Arial,sans-serif}
-header{padding:22px 18px;background:#1b1230;border-bottom:1px solid #382452}
-header h1{margin:0;color:#c9a5ff;font-size:28px}
-header p{color:#c5b6d9;margin:7px 0 0}
-main{max-width:700px;margin:auto;padding:18px}
-.hero{padding:22px;border-radius:20px;background:linear-gradient(135deg,#5425a0,#a33cbb);margin-bottom:20px}
-.hero h2{font-size:25px;margin:0 0 10px}
-.hero p{line-height:1.5}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.card{background:#211832;border:1px solid #493362;border-radius:16px;padding:16px;margin-bottom:14px}
-.card h3{margin:0 0 10px;color:#d8baff}
-.card p{color:#c9bfd5;line-height:1.5}
-input,textarea,select{width:100%;padding:13px;margin:7px 0 12px;border-radius:10px;border:1px solid #594477;background:#160f24;color:white;font-size:16px}
-textarea{min-height:85px}
-button{border:0;border-radius:10px;padding:13px 16px;background:#a65be5;color:white;font-weight:bold;font-size:15px;cursor:pointer}
-button.secondary{background:#39274e}
-button:active{opacity:.8}
-nav{display:flex;gap:8px;overflow:auto;margin-bottom:16px}
-nav button{white-space:nowrap;background:#30213f}
-nav button.active{background:#a65be5}
-.view{display:none}
-.view.active{display:block}
-.result{white-space:pre-wrap;background:#160f24;padding:14px;border-radius:12px;line-height:1.5;margin-top:12px}
-.muted{color:#bdb0cb;font-size:13px}
-.price{font-size:28px;color:#e0b8ff;font-weight:bold}
-.saved{border-top:1px solid #493362;padding:12px 0}
-footer{text-align:center;padding:25px;color:#a99bb9}
-@media(max-width:430px){.grid{grid-template-columns:1fr}}
-</style>
-</head>
-<body>
-<header>
-<h1>✦ MasterIA</h1>
-<p>Seu parceiro inteligente de vendas!</p>
-</header>
-<main>
-<section class="hero">
-<h2>Transforme suas ideias em oportunidades!</h2>
-<p>Crie anúncios, prepare roteiros e encontre novas ideias para divulgar seus produtos.</p>
-<button onclick="show('anuncios')">Começar agora</button>
-</section>
-<nav>
-<button class="active" data-view="inicio" onclick="show('inicio')">Início</button>
-<button data-view="anuncios" onclick="show('anuncios')">Anúncios</button>
-<button data-view="videos" onclick="show('videos')">Vídeos</button>
-<button data-view="ideias" onclick="show('ideias')">Ideias</button>
-<button data-view="salvos" onclick="show('salvos')">Salvos</button>
-<button data-view="premium" onclick="show('premium')">Premium</button>
-</nav>
-<section id="inicio" class="view active">
-<div class="grid">
-<div class="card"><h3>✍️ Anúncios</h3><p>Crie textos para divulgar seus produtos.</p><button onclick="show('anuncios')">Abrir</button></div>
-<div class="card"><h3>🎬 Vídeos</h3><p>Prepare roteiros para seus vídeos.</p><button onclick="show('videos')">Abrir</button></div>
-<div class="card"><h3>💡 Ideias</h3><p>Descubra maneiras de apresentar produtos.</p><button onclick="show('ideias')">Abrir</button></div>
-<div class="card"><h3>⭐ Premium</h3><p>Conheça o plano especial.</p><button onclick="show('premium')">Conhecer</button></div>
-</div>
-</section>
-<section id="anuncios" class="view">
-<div class="card">
-<h3>✍️ Gerador de anúncios</h3>
-<label>Nome do produto</label>
-<input id="produto" placeholder="Ex.: Tapete para banheiro">
-<label>Preço (opcional)</label>
-<input id="preco" placeholder="Ex.: 39,90">
-<label>Características do produto</label>
-<textarea id="caracteristicas" placeholder="Descreva os detalhes reais do produto"></textarea>
-<label>Estilo do anúncio</label>
-<select id="estilo"><option value="chamativo">Chamativo</option><option value="profissional">Profissional</option><option value="direto">Direto</option><option value="leve">Descontraído</option></select>
-<button onclick="anuncio()">Gerar anúncio</button>
-<div id="resultadoAnuncio" class="result" hidden></div>
-<button class="secondary" onclick="salvar('resultadoAnuncio','Anúncio')" style="margin-top:10px">Salvar anúncio</button>
-</div>
-</section>
-<section id="videos" class="view">
-<div class="card">
-<h3>🎬 Criador de roteiros</h3>
-<label>Qual produto será apresentado?</label>
-<input id="videoProduto" placeholder="Nome do produto">
-<label>Principal benefício</label>
-<textarea id="beneficio" placeholder="Qual benefício real ele oferece?"></textarea>
-<label>Duração</label>
-<select id="duracao"><option>15 segundos</option><option>30 segundos</option><option>60 segundos</option></select>
-<button onclick="roteiro()">Criar roteiro</button>
-<div id="resultadoVideo" class="result" hidden></div>
-<button class="secondary" onclick="salvar('resultadoVideo','Roteiro')" style="margin-top:10px">Salvar roteiro</button>
-</div>
-</section>
-<section id="ideias" class="view">
-<div class="card">
-<h3>💡 Ideias para vender mais</h3>
-<input id="ideiaProduto" placeholder="Digite o nome do produto">
-<button onclick="ideias()">Gerar ideias</button>
-<div id="resultadoIdeias" class="result" hidden></div>
-</div>
-</section>
-<section id="salvos" class="view">
-<div class="card"><h3>📚 Meus conteúdos</h3><div id="listaSalvos">Nenhum conteúdo salvo ainda.</div></div>
-</section>
-<section id="premium" class="view">
-<div class="card">
-<h3>👑 MasterIA Premium</h3>
-<div class="price">R$ 59,90</div>
-<p>Plano Premium com acesso aos recursos exclusivos que serão disponibilizados.</p>
-<p class="muted">Pagamento por PIX e cartão: integração em configuração. Ainda não realize pagamentos por esta tela.</p>
-<button disabled style="opacity:.55">Pagamento em breve</button>
-</div>
-</section>
-</main>
-<footer>MasterIA © 2026 · Criando oportunidades para você.</footer>
-<script>
-function show(id){
-document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));
-document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('active',x.dataset.view===id));
-document.getElementById(id).classList.add('active');
-}
-function anuncio(){
-let p=document.getElementById('produto').value.trim();
-if(!p){alert('Digite o nome do produto.');return}
-let preco=document.getElementById('preco').value.trim();
-let c=document.getElementById('caracteristicas').value.trim();
-let estilo=document.getElementById('estilo').value;
-let inicio={chamativo:'✨ Conheça '+p+'!',profissional:'Apresentamos: '+p,direto:p+': conheça os detalhes',leve:'Olha só essa ideia: '+p+'!'};
-let t=inicio[estilo]+'\n\nEstá procurando '+p+'? Conheça os detalhes deste produto!\n\n'+(c?'Características: '+c+'\n\n':'')+(preco?'Preço informado: R$ '+preco+'\n\n':'')+'Confira as especificações e condições antes de comprar.\n\n#Shopee #Achadinhos #Produtos';
-let el=document.getElementById('resultadoAnuncio');el.textContent=t;el.hidden=false;
-}
-function roteiro(){
-let p=document.getElementById('videoProduto').value.trim();
-if(!p){alert('Digite o nome do produto.');return}
-let b=document.getElementById('beneficio').value.trim();
-let d=document.getElementById('duracao').value;
-let t='ROTEIRO — '+d+'\n\nCENA 1 — ABERTURA\nMostre o produto e diga: Você já conhece '+p+'?\n\nCENA 2 — APRESENTAÇÃO\nMostre os detalhes e as características reais.\n\nCENA 3 — BENEFÍCIO\n'+(b||'Apresente um benefício verdadeiro do produto.')+'\n\nCENA 4 — ENCERRAMENTO\nConfira os detalhes e veja se ele combina com você!';
-let el=document.getElementById('resultadoVideo');el.textContent=t;el.hidden=false;
-}
-function ideias(){
-let p=document.getElementById('ideiaProduto').value.trim();
-if(!p){alert('Digite o nome do produto.');return}
-let t='IDEIAS PARA DIVULGAR '+p.toUpperCase()+'\n\n1. Faça um vídeo mostrando os detalhes.\n2. Apresente as características e benefícios reais.\n3. Crie uma demonstração de uso.\n4. Responda às dúvidas mais comuns.\n5. Faça fotos com boa iluminação.\n6. Compare características e vantagens sem exagerar nas promessas.';
-let el=document.getElementById('resultadoIdeias');el.textContent=t;el.hidden=false;
-}
-function salvar(id,tipo){
-let el=document.getElementById(id);
-if(el.hidden||!el.textContent.trim()){alert('Gere um conteúdo primeiro.');return}
-let lista=JSON.parse(localStorage.getItem('masteria_salvos')||'[]');
-lista.unshift({tipo:tipo,texto:el.textContent});
-localStorage.setItem('masteria_salvos',JSON.stringify(lista.slice(0,50)));
-alert('Conteúdo salvo neste aparelho!');
-}
-function renderSalvos(){
-let lista=JSON.parse(localStorage.getItem('masteria_salvos')||'[]');
-let el=document.getElementById('listaSalvos');
-if(!lista.length){el.textContent='Nenhum conteúdo salvo ainda.';return}
-el.innerHTML='';
-lista.forEach((item,i)=>{
-let div=document.createElement('div');div.className='saved';
-let h=document.createElement('b');h.textContent=item.tipo;
-let p=document.createElement('p');p.textContent=item.texto;
-let btn=document.createElement('button');btn.className='secondary';btn.textContent='Excluir';
-btn.onclick=()=>{lista.splice(i,1);localStorage.setItem('masteria_salvos',JSON.stringify(lista));renderSalvos()};
-div.append(h,p,btn);el.append(div);
-});
-}
-renderSalvos();
-</script>
-</body>
-  </html>
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#171029"><link rel="manifest" href="/manifest.webmanifest"><title>MasterIA Studio</title><style>
+*{box-sizing:border-box}body{margin:0;background:#100b1d;color:#f7f2ff;font:16px system-ui,Arial}header{background:#1b1330;padding:19px;border-bottom:1px solid #423052}main{max-width:780px;margin:auto;padding:16px}h1{font-size:25px;margin:0;color:#dbb8ff}h2{font-size:21px}.muted,small{color:#c6b7d8}.hero{background:linear-gradient(130deg,#6534b8,#9c3dc2);padding:22px;border-radius:19px}.card{background:#21182f;border:1px solid #4a385c;padding:18px;border-radius:17px;margin:16px 0}label{display:block;margin-top:13px;font-weight:600}input,select,textarea,button{width:100%;padding:13px;margin-top:7px;border-radius:11px;font:inherit}input,select,textarea{background:#120e1d;color:white;border:1px solid #675078}textarea{min-height:110px;resize:vertical}button{background:#b56cf1;border:0;color:#150b23;font-weight:750;cursor:pointer}button:disabled{opacity:.6}nav{display:flex;gap:8px;overflow:auto;padding:12px 0}nav button{white-space:nowrap;width:auto;background:#38284e;color:#fff;padding:11px}.hidden{display:none}.result{white-space:pre-wrap;background:#130e20;border-radius:12px;padding:14px;margin-top:12px;line-height:1.55;overflow-wrap:anywhere}.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}.pill{display:inline-block;border-radius:20px;background:#37224e;padding:6px 10px;font-size:13px}a{color:#ddb7ff}footer{text-align:center;color:#a999bc;padding:25px}button.secondary{background:#403050;color:white}@media(max-width:460px){.row{grid-template-columns:1fr}}
+</style></head><body><header><h1>✦ MasterIA Studio</h1><div class="muted">Seu estúdio de criação com IA</div></header><main><section class="hero"><h2>Crie. Imagine. Publique.</h2><p>Vídeos, roteiros, anúncios, histórias e ideias no seu Android.</p><span class="pill">Plano criador gratuito</span></section><nav><button data-tab="video">🎬 Vídeos IA</button><button data-tab="story">🎞️ Filmes</button><button data-tab="script">✍️ Roteiros</button><button data-tab="ad">📣 Anúncios</button><button data-tab="image">🖼️ Imagens</button><button data-tab="library">📚 Biblioteca</button><button data-tab="premium">⭐ Premium</button></nav>
+<section class="card" id="video"><h2>🎬 Texto para vídeo</h2><p class="muted">Geração real pela MiniMax. Cada clipe é uma tarefa independente e pode consumir créditos.</p><div id="connection" class="pill">Verificando servidor...</div><label>Descreva a cena</label><textarea id="prompt">Uma morango antropomórfica caminhando por uma cidade futurista, movimentos naturais, iluminação cinematográfica, estilo ultrarrealista, câmera vertical.</textarea><div class="row"><div><label>Modelo</label><select id="model"><option>MiniMax-Hailuo-2.3</option><option>MiniMax-Hailuo-02</option></select></div><div><label>Resolução solicitada</label><select id="resolution"><option>768P</option><option>1080P</option></select></div><div><label>Duração por clipe</label><select id="duration"><option value="6">6 segundos</option><option value="10">10 segundos</option></select></div><div><label>Formato do roteiro</label><select id="aspect"><option>9:16 vertical</option><option>16:9 horizontal</option></select></div></div><button id="generate">Gerar vídeo</button><div id="videoResult" class="result" role="status">Aguardando criação. A disponibilidade de duração e resolução depende do modelo e da sua conta.</div></section>
+<section class="card hidden" id="story"><h2>🎞️ Filme em partes</h2><label>Ideia do filme</label><textarea id="storyIdea" placeholder="Ex.: uma morango explorando uma cidade futurista"></textarea><label>Quantidade de cenas</label><select id="scenes"><option>3</option><option>4</option><option>6</option><option>10</option></select><button id="makeStory">Criar estrutura de cenas</button><div id="storyResult" class="result">Crie cenas e depois gere os clipes individualmente na aba Vídeos.</div></section>
+<section class="card hidden" id="script"><h2>✍️ Criador de roteiros</h2><label>Tema</label><input id="scriptTopic" placeholder="Tema do seu vídeo"><label>Duração</label><select id="scriptLength"><option>15</option><option>30</option><option>60</option></select><button id="makeScript">Criar roteiro-base</button><div id="scriptResult" class="result">Roteiros-base gratuitos, sem precisar de API.</div></section>
+<section class="card hidden" id="ad"><h2>📣 Anúncios</h2><label>Produto</label><input id="product" placeholder="Nome do produto"><label>Características reais</label><textarea id="features"></textarea><button id="makeAd">Criar anúncio</button><div id="adResult" class="result">Seu anúncio aparecerá aqui.</div></section>
+<section class="card hidden" id="image"><h2>🖼️ Prompts para imagens</h2><label>O que deseja criar?</label><textarea id="imageIdea"></textarea><button id="makeImage">Preparar prompt profissional</button><div id="imageResult" class="result">Esta versão cria prompts, não renderiza imagens.</div></section>
+<section class="card hidden" id="library"><h2>📚 Minha biblioteca</h2><p class="muted">Salvo apenas neste navegador. Limpar os dados do navegador apaga os projetos.</p><div id="items"></div><button class="secondary" id="export">Exportar projetos JSON</button></section>
+<section class="card hidden" id="premium"><h2>⭐ MasterIA Premium</h2><p>Área de apresentação de planos. Nenhuma assinatura ou pagamento está ativo.</p><p>Seu acesso às ferramentas gratuitas continua liberado. A geração de vídeos pode consumir créditos MiniMax, independentemente do plano.</p></section>
+</main><footer>MasterIA Studio · versão 3.0</footer><script>
+const $=id=>document.getElementById(id), tabs=[...document.querySelectorAll('[data-tab]')];tabs.forEach(b=>b.onclick=()=>{document.querySelectorAll('main>section.card').forEach(s=>s.classList.add('hidden'));$(b.dataset.tab).classList.remove('hidden');if(b.dataset.tab==='library')render()});
+let entries=[];try{entries=JSON.parse(localStorage.getItem('masteria_v3')||'[]');if(!Array.isArray(entries))entries=[]}catch{entries=[]}
+function save(type,text){entries.unshift({type,text,date:new Date().toLocaleString('pt-BR')});entries=entries.slice(0,100);try{localStorage.setItem('masteria_v3',JSON.stringify(entries))}catch{alert('Armazenamento cheio; exporte seus projetos.')}}
+function show(id,text,type){$(id).textContent=text;save(type,text)}
+function render(){const box=$('items');box.replaceChildren();if(!entries.length){box.textContent='Nenhum projeto salvo.';return}entries.forEach((e,i)=>{const d=document.createElement('div');d.className='result';const h=document.createElement('strong');h.textContent=e.type+' · '+e.date;const p=document.createElement('p');p.textContent=e.text;const b=document.createElement('button');b.textContent='Excluir';b.className='secondary';b.onclick=()=>{entries.splice(i,1);localStorage.setItem('masteria_v3',JSON.stringify(entries));render()};d.append(h,p,b);box.append(d)})}
+$('export').onclick=()=>{const blob=new Blob([JSON.stringify(entries,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='masteria-projetos.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)};
+$('makeStory').onclick=()=>{const idea=$('storyIdea').value.trim();if(!idea)return alert('Descreva a história');const n=Number($('scenes').value);const beats=['Apresentação do personagem e ambiente','Surge um desafio inesperado','O personagem investiga e toma uma decisão','Uma surpresa muda a situação','O conflito chega ao ponto decisivo','Desfecho com uma imagem marcante'];const text=Array.from({length:n},(_,i)=>`CENA ${i+1} — ${beats[Math.min(beats.length-1,Math.floor(i*beats.length/n))]}\nHistória: ${idea}\nVisual: mesma personagem, roupa e cenário consistentes; iluminação cinematográfica; câmera com movimento natural.\nAção: detalhe o que acontece nesta parte.\n`).join('\n');show('storyResult',text,'Filme em cenas')};
+$('makeScript').onclick=()=>{const t=$('scriptTopic').value.trim();if(!t)return alert('Informe o tema');show('scriptResult',`ROTEIRO DE ${$('scriptLength').value} SEGUNDOS — ${t}\n\nABERTURA: uma pergunta curiosa sobre ${t}.\nDESENVOLVIMENTO: apresente o contexto e mostre 2 ou 3 detalhes interessantes.\nENCERRAMENTO: conclua com uma frase memorável e convide o público a comentar.\n\nDica: adapte as falas ao tempo escolhido.`,'Roteiro')};
+$('makeAd').onclick=()=>{const p=$('product').value.trim();if(!p)return alert('Informe o produto');show('adResult',`✨ Conheça ${p}!\n\n${$('features').value.trim()||'Veja as características do produto.'}\n\nConfira as especificações e descubra se combina com você!\n\n#Produtos #Novidades`,'Anúncio')};
+$('makeImage').onclick=()=>{const t=$('imageIdea').value.trim();if(!t)return alert('Descreva a imagem');show('imageResult',`Prompt de imagem: ${t}. Composição profissional, iluminação cinematográfica, detalhes naturais, foco nítido, texturas realistas, cores equilibradas, sem textos indesejados.`,'Prompt de imagem')};
+async function api(path,options){let r;try{r=await fetch(path,options)}catch{throw Error('Servidor inacessível. Abra o endereço publicado do aplicativo, não o arquivo HTML.')};let d;try{d=await r.json()}catch{throw Error('Resposta inválida do servidor')};if(!r.ok)throw Error(d.error||'Erro HTTP '+r.status);return d}
+async function status(){try{const s=await api('/api/status');$('connection').textContent=s.videoConfigured?'🟢 MiniMax configurada':'🟠 Servidor ativo · configure a chave MiniMax'}catch(e){$('connection').textContent='🔴 '+e.message}}status();
+$('generate').onclick=async()=>{const btn=$('generate');btn.disabled=true;try{const p=$('prompt').value.trim();if(p.length<5)throw Error('Descreva melhor a cena');$('videoResult').textContent='Enviando pedido...';const d=await api('/api/video',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt:p,model:$('model').value,duration:Number($('duration').value),resolution:$('resolution').value})});$('videoResult').textContent='Tarefa '+d.task_id+' enviada. Aguardando geração...';let done=false;for(let i=0;i<90;i++){await new Promise(r=>setTimeout(r,6000));const v=await api('/api/video/'+encodeURIComponent(d.task_id));$('videoResult').textContent='Tarefa '+d.task_id+' · '+v.status;if(v.status==='Success'&&v.file_id){const f=await api('/api/file/'+encodeURIComponent(v.file_id));const a=document.createElement('a');a.href=f.url;a.target='_blank';a.rel='noopener noreferrer';a.textContent='Abrir / baixar MP4';$('videoResult').append(document.createElement('br'),a);save('Vídeo MP4',p+'\n'+f.url);done=true;break}if(['Fail','Failed','failure'].includes(v.status))throw Error('A MiniMax não conseguiu gerar este vídeo.')}if(!done)$('videoResult').append('\nTempo de espera atingido. ID da tarefa: '+d.task_id)}catch(e){$('videoResult').textContent='Erro: '+e.message}finally{btn.disabled=false}};
+if('serviceWorker'in navigator)navigator.serviceWorker.register('/sw.js').catch(()=>{});
+</script></body></html>
