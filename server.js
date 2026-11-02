@@ -1,6 +1,9 @@
 import 'dotenv/config';
 import express from 'express';
 const app=express();app.use(express.json({limit:'1mb'}));app.use(express.static('public'));
+app.get('/', (req, res) => {
+  res.sendFile('index.html', { root: process.cwd() });
+});
 const base=(process.env.MINIMAX_BASE_URL||'https://api.minimax.io').replace(/\/$/,'');
 const key=()=>process.env.MINIMAX_API_KEY;
 app.get('/api/status',(req,res)=>res.json({online:true,videoConfigured:!!key()}));
